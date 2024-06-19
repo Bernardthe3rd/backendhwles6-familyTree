@@ -15,6 +15,7 @@ public class Person {
     private List<Person> children = new ArrayList<>();
     private List<Pet> pets = new ArrayList<>();
 
+    //Constructors..
     public Person(String name, String lastName, String sex, int age) {
         this.name = name;
         this.lastName = lastName;
@@ -30,6 +31,7 @@ public class Person {
         this.age = age;
     }
 
+    //Methodes van de Person class..
     public void addParents(Person mother, Person father) {
         this.mother = mother;
         this.father = father;
@@ -47,8 +49,16 @@ public class Person {
         siblings.add(sibling);
     }
 
-    public void getGrandChildren() {
-        //grandchildren zijn children van de children van een persoon. gebruik loops. < hmm what to do? als laatste.
+    public List<Person> getGrandChildren() {
+        List<Person> grandChildren = new ArrayList<>();
+        
+        for (Person child : children) {
+            for (Person grandchild : child.children) {
+                grandChildren.add(grandchild);
+            }
+//            grandChildren.addAll(child.children); <- deze methode doet hetzelfde als de 2e for-loop.
+        }
+        return grandChildren;
     }
 
 
