@@ -51,7 +51,7 @@ public class Person {
 
     public List<Person> getGrandChildren() {
         List<Person> grandChildren = new ArrayList<>();
-        
+
         for (Person child : children) {
             for (Person grandchild : child.children) {
                 grandChildren.add(grandchild);
@@ -59,6 +59,15 @@ public class Person {
 //            grandChildren.addAll(child.children); <- deze methode doet hetzelfde als de 2e for-loop.
         }
         return grandChildren;
+    }
+
+    //Bonusopdracht 1
+    public List<Pet> getPetsFromGrandchildren() {
+        List<Pet> petsFromGrandchildren = new ArrayList<>();
+        for (Person child : getGrandChildren()) {
+            petsFromGrandchildren.addAll(child.pets);
+        }
+        return petsFromGrandchildren;
     }
 
 

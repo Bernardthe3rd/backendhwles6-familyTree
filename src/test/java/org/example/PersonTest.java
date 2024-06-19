@@ -61,6 +61,7 @@ class PersonTest {
         person2.addSiblings(person1);
         //assert
         assertEquals(person1.getLastName(), person2.getLastName());
+        assertNotEquals(person1.getSiblings(), person2.getSiblings());
     }
 
     @Test
@@ -81,6 +82,26 @@ class PersonTest {
         List<Person> grandChildren = grandParent.getGrandChildren();
         //assert
         assertEquals(grandChildren.size(), 2);
+    }
+
+    //Test voor bonusopdracht1
+    @Test
+    void shouldGetPetsFromGrandchildren() {
+        //arrange
+        Person grandParent = new Person("Willem", "Defoe", "Male", 75);
+        Person parent1 = new Person("Bob", "defoe", "Male", 44);
+        Person grandChild1 = new Person("Lesly", "defoe", "Male", 18);
+        Pet snoopy = new Pet("Snoopy", 7, "bulldog");
+
+        //act
+        grandParent.addChild(parent1);
+        parent1.addChild(grandChild1);
+        grandChild1.addPet(snoopy);
+
+        List<Pet> petsFromGrandchildren = grandParent.getPetsFromGrandchildren();
+
+        //assert
+        assertEquals(petsFromGrandchildren.size(), 1);
     }
 
     //Below are the tests for all the getters and setters from the Person class.
@@ -217,21 +238,51 @@ class PersonTest {
     }
 
     @Test
-    void shouldSetSiblings() {
+    void shouldSetSiblings() { //deze test kan denk ik beter!
         //arrange
+        List<Person> siblings = new ArrayList<>();
         Person sibling1 = new Person("Kwik", "Duck", "Male", 14);
         Person sibling2 = new Person("Kwak", "Duck", "Female", 12);
         //act
-        sibling1.addSiblings(sibling2);
-        sibling2.addSiblings(sibling1);
+        siblings.add(sibling1);
+        siblings.add(sibling2);
 
-        sibling1.setSiblings(sibling2.getSiblings());
-        sibling2.setSiblings(sibling1.getSiblings());
+        sibling1.setSiblings(siblings);
+        sibling2.setSiblings(siblings);
 
         //assert
-        assertEquals(sibling1.getSiblings().size(), 1);
-        assertEquals(sibling2.getSiblings().size(), 1);
+        assertEquals(siblings.size(), 2);
     }
 
-    
+    @Test
+    void shouldSetChildren() {
+        //arrange
+        List<Person> children = new ArrayList<>();
+        Person parent = new Person("Getty", "Defoe", "Male", 30);
+        Person child = new Person("Jordy", "Defoe", "Female", 3);
+        Person child2 = new Person("Wimmy", "Defoe", "Male", 2);
+        //act
+        children.add(child);
+        children.add(child2);
+
+        parent.setChildren(children);
+        //asset
+        assertEquals(children.size(), 2);
+    }
+
+    @Test
+    void shouldSetPets() {
+        //arrange
+        List<Pet> pets = new ArrayList<>();
+        Person owner = new Person("Willem", "Defoe", "Male", 30);
+        Pet dog = new Pet("Goofy", 8, "wild dog");
+        Pet cat = new Pet("Toofy", 5, "wild cat");
+        //act
+        pets.add(dog);
+        pets.add(cat);
+
+        owner.setPets(pets);
+        //assert
+        assertEquals(pets.size(), 2);
+    }
 }
